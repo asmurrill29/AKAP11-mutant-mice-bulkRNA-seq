@@ -1,0 +1,10 @@
+name: sratoolkit_env
+channels:
+  - bioconda
+  - conda-forge
+  - nodefaults
+dependencies:
+  - sra-tools = 3.2.1
+
+
+prefix: /projectnb/bf528/students/amurrill/.conda/envs/sratoolkit_env
