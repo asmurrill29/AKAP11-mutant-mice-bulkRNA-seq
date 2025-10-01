@@ -1,0 +1,9 @@
+name: fastqc_env
+channels:
+  - bioconda
+  - conda-forge
+  - nodefaults
+dependencies:
+  - bioconda::fastqc=0.11.9
+  
+prefix: /projectnb/bf528/students/amurrill/.conda/envs/fastqc_env
