@@ -9,7 +9,7 @@ process GET_SRA_DATA {
     val(sra_accession) //variable for accession number
 
     output:  
-    path ("${sra_accession}*.fastq.gz") //glob allows for both single and paired-end reads
+    tuple val(sra_accession), path("${sra_accession}*.fastq.gz")  //changed to tuple given issues downstream in creating paired FASTQC files
 
     script:
     //Dump fastq files with splitting
