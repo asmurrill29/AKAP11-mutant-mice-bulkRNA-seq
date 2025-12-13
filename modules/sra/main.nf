@@ -2,7 +2,7 @@
 
 process GET_SRA_DATA {
     label 'process_high' //requires more threads for this process
-    publishDir params.outdir, mode:'copy' //send fastq files to "results"
+    publishDir "params.outdir/sra_downloads", mode:'copy' //send fastq files to particular directory to then be renamed
     conda 'envs/sratoolkit_env.yml' //path to valid yml file
 
     input:
