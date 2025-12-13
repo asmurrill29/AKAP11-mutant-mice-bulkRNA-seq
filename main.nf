@@ -1,9 +1,17 @@
 #!/usr/bin/env nextflow
 
+//included processes from modules
 include {GET_SRA_DATA} from './modules/sra'
-include {FASTQC} from './modules/fastqc'
-include {GET_GTF} from './modules/get_gtf'
-include {GET_GENOME} from './modules/get_genome' 
+include {RENAME_SAMPLES} from './modules/rename_samples'
+//include {GET_GTF} from './modules/get_gtf'
+//include {IDS_AND_NAMES} from './modules/ids_and_names'
+//include {GET_GENOME} from './modules/get_genome'
+//include {FASTQC} from './modules/fastqc'
+//include {STAR_INDEX} from './modules/star_index'
+//include {STAR_ALIGN} from './modules/star_align'
+//include {MULTIQC} from './modules/multiqc'
+//include {VERSE} from './modules/verse'
+//include {CONCAT} from './modules/concat'
 
 workflow {
 
@@ -13,16 +21,31 @@ Channel.fromPath(params.accessions)
 | map { row -> row[1]}
 | set {accessions}
 
-//Download gtf file from GENCODE (Comprehensive gene annotation, primary)
-GET_GTF() 
-
-//Download reference genome from GENCODE (Genome sequence, primary assembly (GRCm39), primary)
-GET_GENOME()
-
 //Retrieve paired fastq files from accessions   
 GET_SRA_DATA(accessions)
 
+// Generate a channel to rename the reads by sample name
+mapping_csv_ch = Channel.fromPath(params.accessions)
+
+//Rename files to be labeled by sample name, not accession number
+RENAME_SAMPLES(GET_SRA_DATA.out.collect(), mapping_csv_ch)
+
+//Download gtf file from GENCODE (Comprehensive gene annotation, primary)
+//GET_GTF() 
+
+//Select gene IDs and gene names for downstream differential expression analysis
+//IDS_AND_NAMES(GET_GTF.out) 
+
+//Download reference genome from GENCODE (Genome sequence, primary assembly (GRCm39), primary)
+//GET_GENOME()
+
 //Perform QC on the reads: acquire html and zip files describing results
-FASTQC(GET_SRA_DATA.out)
+//FASTQC(GET_SRA_DATA.out)
+
+//Index the reference genome using the gtf annotation file
+//STAR_INDEX(GET_GTF.out, GET_GENOME.out) 
+
+//Align reads retrieved from SRA accessions to genome using the generated index
+//STAR_ALIGN(GET_SRA_DATA.out, STAR_INDEX.out.index) 
 
 }
