@@ -28,7 +28,7 @@ gtf_df = read_gtf(args.input)
 gene_df = gtf_df.filter(gtf_df["feature"] == "gene")
 
 #extract gene IDs and gene names 
-ids_df = gene_df.select(["gene_id", "gene_name"])
+ids_and_names_df = gene_df.select(["gene_id", "gene_name"])
 
 # Write to CSV file (Polars syntax)
-ids_df.write_csv(args.output)
+ids_and_names.write_csv(args.output)
