@@ -8,10 +8,10 @@ include {IDS_AND_NAMES} from './modules/ids_and_names'
 include {GET_GENOME} from './modules/get_genome'
 include {FASTQC} from './modules/fastqc'
 include {STAR_INDEX} from './modules/star_index'
-//include {STAR_ALIGN} from './modules/star_align'
-//include {MULTIQC} from './modules/multiqc'
-//include {VERSE} from './modules/verse'
-//include {CONCAT} from './modules/concat'
+include {STAR_ALIGN} from './modules/star_align'
+include {MULTIQC} from './modules/multiqc'
+include {VERSE} from './modules/verse'
+include {CONCAT} from './modules/concat'
 
 workflow {
 
@@ -45,23 +45,37 @@ IDS_AND_NAMES(GET_GTF.out)
 //Download reference genome from GENCODE (Genome sequence, primary assembly (GRCm39), primary)
 GET_GENOME()
 
-//Perform QC on the reads: acquire html and zip files describing results
-
 //Convert to tuples for FASTQC
 renamed_tuples = RENAME_SAMPLES.out.renamed_reads
     .flatten()
     .map { file ->
-        def sample_name = file.name.replaceAll(/(_[12])\.fastq\.gz$/, '')
+        def sample_name = file.name.replaceAll(/_[12]\.fastq\.gz$/, '')
         return tuple(sample_name, file)
     }
     .groupTuple()
 
+//Perform QC on the reads: acquire html and zip files describing results
 FASTQC(renamed_tuples)
 
 //Index the reference genome using the gtf annotation file
 STAR_INDEX(GET_GTF.out, GET_GENOME.out) 
 
 //Align reads retrieved from SRA accessions to genome using the generated index
-//STAR_ALIGN(RENAME_SAMPLES.out.renamed_reads, STAR_INDEX.out.index) 
+STAR_ALIGN(renamed_tuples, STAR_INDEX.out.index) 
+
+//Collect logs and zip files from FASTQC and STAR respectively and pass into MULTIQC for analysis
+multiqc_ch = FASTQC.out.zip
+    .map { sample_id, file -> file }
+    .mix(STAR_ALIGN.out.log)
+    .collect()
+
+MULTIQC(multiqc_ch)
+
+//Generate counts for each aligned read 
+VERSE(STAR_ALIGN.out.bam, GET_GTF.out)
+
+//Create counts matrix by concatenating the verse files together
+CONCAT(VERSE.out.collect())
+
 
 }
