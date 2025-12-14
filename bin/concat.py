@@ -5,8 +5,6 @@ import pandas as pd
 import argparse
 import os
 
-#Argparse:
-
 #generate variable for arpargse with description of script
 parser = argparse.ArgumentParser(description='concatenates all of the verse output files')
 
