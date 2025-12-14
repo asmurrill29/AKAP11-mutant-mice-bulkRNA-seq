@@ -2,19 +2,24 @@
 
 process FASTQC {
     label 'process_low'
-    publishDir params.outdir, mode: 'copy', pattern:'*.html' //make sure pattern is globbed html so that only those files are produced
-    conda 'envs/fastqc_env.yml'
+    container 'ghcr.io/bf528/fastqc:latest' 
+    publishDir "${params.outdir}/fastqc", mode: 'copy'
 
     input:
-    tuple val(accession), path(reads) 
+    tuple val(sample_name), path(reads) 
 
     output:
-    tuple val(accession), path('*.zip'), emit: zip
-    tuple val(accession), path('*.html'), emit: html
+    tuple val(sample_name), path('*.zip'), emit: zip
+    //tuple val(sample_name), path('*.html'), emit: html
 
     script:
     """
-    fastqc $reads --threads $task.cpus
+    mkdir -p \$PWD/tmp_fastqc
+    export TMPDIR=\$PWD/tmp_fastqc
+    
+    fastqc ${reads} --threads ${task.cpus}
+    
+    rm -rf \$PWD/tmp_fastqc
     """
 
 }
