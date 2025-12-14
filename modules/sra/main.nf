@@ -2,9 +2,9 @@
 
 process GET_SRA_DATA {
     label 'process_high' //requires more threads for this process
+    container 'quay.io/biocontainers/sra-tools:3.1.1--h4304569_0'
     publishDir "$projectDir/results/sra_downloads", mode:'copy' //send fastq files to particular directory to then be renamed
-    conda 'envs/sratoolkit_env.yml' //path to valid yml file
-
+    
     input:
     val(sra_accession) //variable for accession number
 
@@ -19,7 +19,7 @@ process GET_SRA_DATA {
      --split-files \
      --threads ${task.cpus} \
      --progress
-    pigz -p ${task.cpus} ${sra_accession}*.fastq
+    gzip ${sra_accession}*.fastq
     """
 }
 
