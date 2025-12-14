@@ -2,7 +2,7 @@
 
 process IDS_AND_NAMES {
     label 'process_low'
-    container 'quay.io/biocontainers/gtfparse:2.3.0--pyh7cba7a3_0' //from biocontainers
+    container 'ghcr.io/bf528/pandas:latest'
     publishDir params.outdir, mode: 'copy'
     
     input:
