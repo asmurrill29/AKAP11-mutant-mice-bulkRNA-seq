@@ -2,8 +2,9 @@
 
 process GET_GTF {
     label 'process_low' //does not require many threads for this process
+    container 'quay.io/biocontainers/python:3.11'
     publishDir params.outdir, mode:'copy' 
-    conda 'envs/download.yml' // wget download yml file
+    
 
 
     output:
