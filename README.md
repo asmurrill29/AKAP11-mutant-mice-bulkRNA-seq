@@ -19,9 +19,11 @@ Create CSV samplesheet as a param.
 
     1. Extract files using sra-tools(v3.1.1): --split-files parameter.
     2. Rename by sample name using an argparse-based python script (pandas v2.2.3)
-    3. Download the GTF annotation and reference genome files: wget command using default parameters
+    3. Download the GTF annotation and reference genome files: wget command using 
+       default parameters
     4. FASTQC (v0.12.1) on a channel of the paired reads using default parameters
-    5. STAR (v2.7.11b) to index using default parameters and then align to generate unsorted BAM files and output logs: --outSAMtype BAM Unsorted and 2> ${name}.Log.final.out parameters
+    5. STAR (v2.7.11b) to index using default parameters and then align to generate
+       unsorted BAM files and output logs: --outSAMtype BAM Unsorted and 2> ${name}.Log.final.out parameters
     6. MULTIQC process (v1.25) using align logs and FastQC logs, standard parameters
     7. VERSE (v0.1.5) to make counts matrix under default parameters
  
