@@ -6,13 +6,17 @@ The raw bulk RNA-seq reads were found on Gene Expression Omnibus (GEO) with the 
 
 ### Workflow and Analysis 
 Notes:
+
 Pre-processing and quality control were performed using Nextflow (v25.04.6).
 
 Singularity container images: pipeline_containers repository (BF528, n.d.) and BioContainers (da Veiga Leprevost et al., 2017).
 
 Only the extracted prefrontal cortices (PFC) of 12 week-old mice were analyzed in this project, but other samples can be used for this pipeline (i.e. 4wk-Str).
 
-Create CSV samplesheet as a param.
+Boston University's SCC cluster was used to perform some of the more intensive processes. Labels in each process
+dictate the amount of cpus used based on the resources available. This can be changed according one's discretion.  
+
+Create CSV samplesheet as a param with selected SRA accession numbers and corresponding sample name.
 
     1. Extract files using sra-tools(v3.1.1): --split-files parameter.
     2. Rename by sample name using an argparse-based python script (pandas v2.2.3)
