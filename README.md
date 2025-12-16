@@ -1,8 +1,5 @@
 ## Analyzing bulkRNA-sequencing data in the prefrontal cortex of Akap11 mutant mice
-A project seeking to reproduce, compare, and analyze the results found in Song et al., "Elevated synaptic PKA activity and abnormal striatal dopamine signaling in Akap11 mutant mice, a genetic model of schizophrenia and bipolar disorder" (doi: https://doi.org/10.1101/2024.09.24.614783).
-
-### Overview
-
+A project seeking to reproduce, compare, and analyze the results found in Song et al. (2025), "Elevated synaptic PKA activity and abnormal striatal dopamine signaling in Akap11 mutant mice, a genetic model of schizophrenia and bipolar disorder" (doi: https://doi.org/10.1101/2024.09.24.614783). This is a working bulk RNA-seq pipeline and pathway enrichment analysis for the 12 week prefrontal cortex group across three genotypes, Akap11 (-/-, KO), Akap11 (+/-, HET), and Akap11 (+/+, WT). 
 
 ### Data Acquisition
 The raw bulk RNA-seq reads were found on Gene Expression Omnibus (GEO) with the ID number GSE306677 as listed in the publication. The samples' SRA accession numbers were selected from this database for this project. 
@@ -35,9 +32,9 @@ bin/: argparse python scripts for intermediate work
 
 diff_expr_analysis/: Rmd file for detailed DE analysis
 
-envs/: yml files used before singularity
+envs/: yml files used before the switch to singularity
 
-modules/: processes to be included in main.nf
+modules/: pipeline processes
 
 main.nf: main workflow with included processes from modules
 
