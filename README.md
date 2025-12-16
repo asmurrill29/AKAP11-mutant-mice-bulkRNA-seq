@@ -9,9 +9,12 @@ The raw bulk RNA-seq reads were found on Gene Expression Omnibus (GEO) with the 
 
 ### Workflow and Analysis 
 Notes:
-Pre-processing and quality control was performed using Nextflow (v25.04.6). 
+Pre-processing and quality control was performed using Nextflow (v25.04.6).
+
 Singularity container images: pipeline_containers repository (BF528, n.d.) and BioContainers (da Veiga Leprevost et al., 2017).
+
 Only the extracted prefrontal cortices (PFC) of 12 week-old mice were analyzed in this project, but other samples can be used for this pipeline (i.e. 4wk-Str).
+
 Create CSV samplesheet as a param.
 
     1. Extract files using sra-tools(v3.1.1): --split-files parameter.
@@ -27,10 +30,15 @@ Check dif_exr_analysis/AKAP11_analysis.RMD and final_project.pdf for QC analysis
 
 ### Folder Structure
 bin/: argparse python scripts for intermediate work
+
 diff_expr_analysis/: Rmd file for detailed DE analysis
+
 envs/: yml files used before singularity
+
 modules/: processes to be included in main.nf
+
 main.nf: main workflow with included processes from modules
+
 nextflow.config: variable storage and profile
 
 
