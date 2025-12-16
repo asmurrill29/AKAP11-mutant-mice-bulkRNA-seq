@@ -9,7 +9,7 @@ The raw bulk RNA-seq reads were found on Gene Expression Omnibus (GEO) with the 
 
 ### Workflow and Analysis 
 Notes:
-Pre-processing and quality control was performed using Nextflow (v25.04.6).
+Pre-processing and quality control were performed using Nextflow (v25.04.6).
 
 Singularity container images: pipeline_containers repository (BF528, n.d.) and BioContainers (da Veiga Leprevost et al., 2017).
 
@@ -28,7 +28,7 @@ Create CSV samplesheet as a param.
     7. VERSE (v0.1.5) to make counts matrix under default parameters
  
 ### Results
-Check dif_exr_analysis/AKAP11_analysis.RMD and final_project.pdf for QC analysis and results.
+Check diff_expr_analysis/AKAP11_analysis.RMD and final_project.pdf for QC analysis and results.
 
 ### Folder Structure
 bin/: argparse python scripts for intermediate work
